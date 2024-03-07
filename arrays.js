@@ -1,47 +1,90 @@
-export const manualArrayLength = (array) => {
-  let r = 0;
-
-  for (const iterator of array) {
-    r++;
+export function arrayLength(array) {
+  let i = 0;
+  for (const item of array) {
+    i++;
   }
 
-  return r;
-};
+  return i;
+}
 
-export const fakeIndexOf = (arr, arrayElement) => {
-  if (arrayElement === undefined) {
-    throw new Error('you must indicate an element to be indexed.');
+export function arrayPush(array, ...elements) {
+  const elementLength = elements.length;
+  for (let i = 0; i < elementLength; i++) {
+    array[arrayLength(array)] = elements[i];
   }
 
+  return arrayLength(array);
+}
+
+export function indexOf(arr, element) {
   let elementIndex = -1;
-  const arrayLength = manualArrayLength(arr);
-  for (let i = 0; i < arrayLength; i++) {
-    if (arrayElement === arr[i]) {
+  for (let i = 0; i < arrayLength(arr); i++) {
+    if (element === arr[i]) {
       elementIndex = i;
     }
   }
+
   return elementIndex;
-};
+}
 
-export const fakePush = (arr, ...p) => {
-  const arrayLength = manualArrayLength(arr);
-  const pLength = manualArrayLength(p);
-  for (let i = 0; i < pLength; i++) {
-    arr[arrayLength + i] = p[i];
+export function shift(arr) {
+  if (arr.length === 0) return undefined;
+
+  const removedElement = arr[0];
+  for (let i = 0; i < arr.length - 1; i++) {
+    arr[i] = arr[i + 1];
   }
-  const newLength = manualArrayLength(arr);
-  return newLength;
-};
-export const multiply = (a) => {
-  return a * 2;
+
+  arr.length--;
+
+  return removedElement;
+}
+
+export function some(arr, callbackFunction) {
+  for (const element of arr) {
+    if (callbackFunction(element)) return true;
+  }
+
+  return false;
+}
+
+export function map(arr, callbackFunction) {
+  let newArr = [];
+  for (const element of arr) {
+    arrayPush(newArr, callbackFunction(element));
+  }
+
+  return newArr;
+}
+export const includes = (element) => {
+  const compareArray = ['pikachu', 'charmeleon', 'charmander'];
+
+  for (let arrayElement of compareArray) {
+    if (arrayElement === element) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 };
 
-export const fakeMap = (arr, func) => {
-  const arrayLength = manualArrayLength(arr);
-  let newArray = new Array(arrayLength);
-  for (let i = 0; i < arrayLength; i++) {
-    const element = func(arr[i]);
-    newArray[i] = element;
+export const filter = (arr, conditionFunc) => {
+  let newArray = [];
+  for (const element of arr) {
+    if (conditionFunc(element)) {
+      arrayPush(newArray, element);
+    }
   }
   return newArray;
+};
+
+export const find = (arr, conditionFunc) => {
+  let firstSuit;
+  for (const element of arr) {
+    if (conditionFunc(element)) {
+      firstSuit = element;
+      break;
+    }
+  }
+  return firstSuit;
 };
