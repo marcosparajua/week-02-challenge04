@@ -62,10 +62,9 @@ export const includes = (element) => {
   for (let arrayElement of compareArray) {
     if (arrayElement === element) {
       return true;
-    } else {
-      return false;
     }
   }
+  return false;
 };
 
 export const filter = (arr, conditionFunc) => {
